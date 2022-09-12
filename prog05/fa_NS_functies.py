@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from re import T
 import traceback, collections
 
 """
@@ -19,6 +20,21 @@ Lever je werk in op Canvas als alle tests slagen.
 
 
 def standaardprijs(afstandKM):
+    treinrit_prijs_per_kilometer = 0.80
+
+    
+    if afstandKM > 50:
+        treinrit_prijs_per_kilometer = 0.60
+        prijs = treinrit_prijs_per_kilometer * afstandKM + 15
+
+    else:
+        prijs = (treinrit_prijs_per_kilometer * afstandKM)
+    
+    if afstandKM <= 0:
+        prijs = 0
+        return prijs
+    
+    return float(prijs)
     """
     Bepaal de prijs van een treinrit. Iedere treinrit kost 80 cent per kilometer,
     maar als de rit langer is dan 50 kilometer betaal je een vast bedrag van €15,-
@@ -32,10 +48,21 @@ def standaardprijs(afstandKM):
     Returns:
         float: De berekende standaardprijs.
     """
-    return
-
 
 def ritprijs(leeftijd, weekendrit, afstandKM):
+    global standaardprijs
+    standaardprijs = standaardprijs(afstandKM)
+
+    if weekendrit == True:
+        if leeftijd < 12 or leeftijd >= 65:
+            prijs = standaardprijs * 0.65
+        else:
+            prijs = standaardprijs * 0.60
+    else:
+        if leeftijd < 12 or leeftijd >= 65:
+            prijs = standaardprijs * 0.7
+        
+    return float(prijs)
     """
     Het eerste wat deze functie moet doen, is het aanroepen van
     functie standaardprijs, waarbij de afstand in kilometers doorgegeven
